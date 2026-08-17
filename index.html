@@ -27,8 +27,28 @@
     box-sizing: border-box;
   }
   .bche-root *, .bche-root *::before, .bche-root *::after { box-sizing: border-box; }
+
+  /* Brokerage bar — sits ABOVE everything, equal-or-greater prominence than agent/team name */
+  .bche-brokerage-bar {
+    background: var(--forest-dark);
+    color: #fff;
+    padding: 14px 40px;
+    text-align: center;
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 0.01em;
+  }
+  .bche-brokerage-bar .team {
+    display: block;
+    font-weight: 500;
+    font-size: 13px;
+    color: rgba(255,255,255,0.75);
+    margin-top: 2px;
+  }
+
   .bche-topo {
-    height: 64px;
+    height: 48px;
     width: 100%;
     display: block;
     background: var(--forest);
@@ -36,7 +56,7 @@
   .bche-hero {
     background: var(--forest);
     color: var(--mist);
-    padding: 40px 40px 44px;
+    padding: 32px 40px 40px;
     position: relative;
   }
   .bche-eyebrow {
@@ -65,7 +85,7 @@
     max-width: 46ch;
   }
   .bche-body {
-    padding: 36px 40px 40px;
+    padding: 36px 40px 8px;
   }
   .bche-field {
     margin-bottom: 18px;
@@ -101,6 +121,52 @@
   .bche-field select:focus {
     border-color: var(--cedar);
   }
+
+  /* Disclosure block — shown BEFORE personal info is submitted */
+  .bche-disclosure {
+    margin: 8px 0 22px;
+    padding: 16px 18px;
+    background: #fff;
+    border: 1.5px solid var(--line);
+    border-radius: 3px;
+  }
+  .bche-disclosure h3 {
+    font-family: 'Public Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--forest);
+    margin: 0 0 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+  .bche-disclosure p {
+    font-size: 13px;
+    line-height: 1.55;
+    color: #4a544e;
+    margin: 0 0 10px;
+  }
+  .bche-disclosure p:last-child { margin-bottom: 0; }
+  .bche-disclosure a { color: var(--cedar); font-weight: 600; }
+  .bche-consent {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: 12px;
+  }
+  .bche-consent input[type="checkbox"] {
+    margin-top: 3px;
+    width: 16px;
+    height: 16px;
+    flex: none;
+    accent-color: var(--cedar);
+  }
+  .bche-consent label {
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: var(--ink);
+    font-weight: 500;
+  }
+
   .bche-submit {
     width: 100%;
     margin-top: 6px;
@@ -116,8 +182,12 @@
     cursor: pointer;
     transition: background 0.15s ease, transform 0.1s ease;
   }
-  .bche-submit:hover { background: #8f5c30; }
-  .bche-submit:active { transform: translateY(1px); }
+  .bche-submit:disabled {
+    background: #c9bba9;
+    cursor: not-allowed;
+  }
+  .bche-submit:not(:disabled):hover { background: #8f5c30; }
+  .bche-submit:not(:disabled):active { transform: translateY(1px); }
   .bche-submit:focus-visible { outline: 2px solid var(--forest); outline-offset: 2px; }
   .bche-fine {
     margin-top: 14px;
@@ -189,8 +259,9 @@
   }
   .bche-body.bche-hide, .bche-trust.bche-hide { display: none; }
   @media (max-width: 520px) {
-    .bche-hero { padding: 32px 22px 36px; }
-    .bche-body { padding: 28px 22px 32px; }
+    .bche-brokerage-bar { padding: 12px 22px; font-size: 14.5px; }
+    .bche-hero { padding: 28px 22px 32px; }
+    .bche-body { padding: 28px 22px 8px; }
     .bche-trust { padding: 16px 22px; }
     .bche-row { grid-template-columns: 1fr; gap: 0; }
   }
@@ -198,16 +269,24 @@
 </head>
 <body>
 <div class="bche-root">
-  <svg class="bche-topo" viewBox="0 0 720 64" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <rect width="720" height="64" fill="#1B3A2F"/>
-    <path d="M0 44 C 60 20, 100 52, 160 30 S 260 10, 320 34 S 420 54, 480 26 S 600 8, 660 32 S 720 40, 720 40" fill="none" stroke="#A8703E" stroke-width="1.4" opacity="0.55"/>
-    <path d="M0 54 C 70 34, 130 58, 190 40 S 290 22, 350 44 S 460 60, 520 36 S 620 18, 680 40 S 720 46, 720 46" fill="none" stroke="#3E5C76" stroke-width="1.2" opacity="0.45"/>
+
+  <!-- BROKERAGE NAME — equal or greater prominence than agent/team name, per BCFSA Rule 4-14 -->
+  <div class="bche-brokerage-bar">
+    Bright Space Real Estate Group
+    <span class="team">Woodhouse Realty</span>
+  </div>
+
+  <svg class="bche-topo" viewBox="0 0 720 48" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <rect width="720" height="48" fill="#1B3A2F"/>
+    <path d="M0 34 C 60 15, 100 40, 160 22 S 260 8, 320 26 S 420 42, 480 20 S 600 6, 660 24 S 720 30, 720 30" fill="none" stroke="#A8703E" stroke-width="1.2" opacity="0.5"/>
   </svg>
+
   <div class="bche-hero">
     <p class="bche-eyebrow">Free Property Evaluation</p>
     <h1>What's your home worth in today's BC market?</h1>
     <p>Get a no-obligation market evaluation from a local agent — grounded in real comparable sales in your neighbourhood, not an automated guess.</p>
   </div>
+
   <form class="bche-body" id="bcheForm" action="https://formspree.io/f/moeakjlg" method="POST">
     <div class="bche-field">
       <label for="bche-address">Property address</label>
@@ -239,18 +318,43 @@
         </select>
       </div>
     </div>
-    <button type="submit" class="bche-submit">Get my free home evaluation</button>
+
+    <!-- DISCLOSURE — shown before submission, per BCFSA disclosure-of-representation requirements.
+         Replace the placeholder paragraph below with the exact text/link your managing broker provides. -->
+    <div class="bche-disclosure">
+      <h3>Before you submit</h3>
+      <p>
+        This is the personal website of <strong>Happy Singh</strong>, a real estate licensee. It is not
+        the official website of Woodhouse Realty. Happy Singh provides real estate trading services
+        exclusively through, and under the supervision of, <strong>Woodhouse Realty</strong> (Bright
+        Space Real Estate Group), which is regulated by the BC Financial Services Authority (BCFSA).
+        By submitting this form, you understand that a licensed representative of Woodhouse Realty will
+        contact you regarding your property evaluation.
+      </p>
+      <p>
+        This communication is not intended to breach or become a cause of breach of an existing agency relationship.
+      </p>
+      <div class="bche-consent">
+        <input type="checkbox" id="bche-consent" name="consent" required>
+        <label for="bche-consent">I have read and understand the disclosure above, and consent to being contacted by a licensed representative of Woodhouse Realty.</label>
+      </div>
+    </div>
+
+    <button type="submit" class="bche-submit" id="bcheSubmitBtn" disabled>Get my free home evaluation</button>
     <p class="bche-fine">No commitment. Your information is only used to prepare your evaluation.</p>
   </form>
+
   <div class="bche-trust" id="bcheTrust">
     <span>Local BC market data</span>
     <span>Response within 24 hrs</span>
     <span>No obligation</span>
   </div>
+
   <div class="bche-agent">
     <p class="name">Happy Singh</p>
-    <p class="details">Woodhouse Realty — Team Bright Space Real Estate Group<br>778&nbsp;246&nbsp;1246</p>
+    <p class="details">Licensed Representative — Woodhouse Realty<br>778&nbsp;246&nbsp;1246</p>
   </div>
+
   <div class="bche-success" id="bcheSuccess">
     <h2>Thanks — request received.</h2>
     <p>A local agent will follow up with your evaluation shortly.</p>
@@ -261,9 +365,17 @@
     var form = document.getElementById('bcheForm');
     var trust = document.getElementById('bcheTrust');
     var success = document.getElementById('bcheSuccess');
+    var consent = document.getElementById('bche-consent');
+    var submitBtn = document.getElementById('bcheSubmitBtn');
+
+    // Submit button stays disabled until the disclosure checkbox is ticked
+    consent.addEventListener('change', function () {
+      submitBtn.disabled = !consent.checked;
+    });
+
     form.addEventListener('submit', function (e) {
       e.preventDefault();
-      var submitBtn = form.querySelector('.bche-submit');
+      if (!consent.checked) return;
       submitBtn.disabled = true;
       submitBtn.textContent = 'Sending…';
       fetch(form.action, {
@@ -292,4 +404,3 @@
 </script>
 </body>
 </html>
-
