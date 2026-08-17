@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What's Your BC Home Worth?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  .bche-root {
+    --forest: #1B3A2F;
+    --forest-dark: #12261E;
+    --mist: #E9EFEC;
+    --cream: #FAF7F0;
+    --cedar: #A8703E;
+    --slate: #3E5C76;
+    --line: rgba(27,58,47,0.14);
+    --ink: #1C2420;
+    font-family: 'Public Sans', -apple-system, sans-serif;
+    color: var(--ink);
+    background: var(--cream);
+    max-width: 720px;
+    margin: 0 auto;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+  .bche-root *, .bche-root *::before, .bche-root *::after { box-sizing: border-box; }
+  .bche-topo {
+    height: 64px;
+    width: 100%;
+    display: block;
+    background: var(--forest);
+  }
+  .bche-hero {
+    background: var(--forest);
+    color: var(--mist);
+    padding: 40px 40px 44px;
+    position: relative;
+  }
+  .bche-eyebrow {
+    font-family: 'Public Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--cedar);
+    margin: 0 0 14px;
+  }
+  .bche-hero h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: clamp(28px, 5vw, 40px);
+    line-height: 1.12;
+    margin: 0 0 14px;
+    color: #fff;
+    letter-spacing: -0.01em;
+  }
+  .bche-hero p {
+    font-size: 15.5px;
+    line-height: 1.6;
+    color: rgba(233,239,236,0.82);
+    margin: 0;
+    max-width: 46ch;
+  }
+  .bche-body {
+    padding: 36px 40px 40px;
+  }
+  .bche-field {
+    margin-bottom: 18px;
+  }
+  .bche-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .bche-field label {
+    display: block;
+    font-size: 12.5px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--forest);
+    margin-bottom: 7px;
+  }
+  .bche-field input,
+  .bche-field select {
+    width: 100%;
+    padding: 12px 14px;
+    font-family: 'Public Sans', sans-serif;
+    font-size: 15px;
+    color: var(--ink);
+    background: #fff;
+    border: 1.5px solid var(--line);
+    border-radius: 3px;
+    outline: none;
+    transition: border-color 0.15s ease;
+  }
+  .bche-field input::placeholder { color: #9aa39c; }
+  .bche-field input:focus,
+  .bche-field select:focus {
+    border-color: var(--cedar);
+  }
+  .bche-submit {
+    width: 100%;
+    margin-top: 6px;
+    padding: 15px 20px;
+    background: var(--cedar);
+    color: #fff;
+    font-family: 'Public Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background 0.15s ease, transform 0.1s ease;
+  }
+  .bche-submit:hover { background: #8f5c30; }
+  .bche-submit:active { transform: translateY(1px); }
+  .bche-submit:focus-visible { outline: 2px solid var(--forest); outline-offset: 2px; }
+  .bche-fine {
+    margin-top: 14px;
+    font-size: 12px;
+    line-height: 1.5;
+    color: #6b756f;
+    text-align: center;
+  }
+  .bche-trust {
+    display: flex;
+    gap: 22px;
+    padding: 18px 40px;
+    border-top: 1px solid var(--line);
+    background: var(--mist);
+    flex-wrap: wrap;
+  }
+  .bche-trust span {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--slate);
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .bche-trust span::before {
+    content: "";
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--cedar);
+    flex: none;
+  }
+  .bche-agent {
+    padding: 20px 40px;
+    border-top: 1px solid var(--line);
+    background: var(--cream);
+    text-align: center;
+  }
+  .bche-agent .name {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--forest);
+    margin: 0 0 3px;
+  }
+  .bche-agent .details {
+    font-size: 12.5px;
+    color: #5c655f;
+    margin: 0;
+    line-height: 1.6;
+  }
+  .bche-success {
+    display: none;
+    padding: 56px 40px;
+    text-align: center;
+  }
+  .bche-success.bche-show { display: block; }
+  .bche-success h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 26px;
+    color: var(--forest);
+    margin: 0 0 10px;
+  }
+  .bche-success p {
+    font-size: 14.5px;
+    color: #5c655f;
+    margin: 0;
+  }
+  .bche-body.bche-hide, .bche-trust.bche-hide { display: none; }
+  @media (max-width: 520px) {
+    .bche-hero { padding: 32px 22px 36px; }
+    .bche-body { padding: 28px 22px 32px; }
+    .bche-trust { padding: 16px 22px; }
+    .bche-row { grid-template-columns: 1fr; gap: 0; }
+  }
+</style>
+</head>
+<body>
+<div class="bche-root">
+  <svg class="bche-topo" viewBox="0 0 720 64" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <rect width="720" height="64" fill="#1B3A2F"/>
+    <path d="M0 44 C 60 20, 100 52, 160 30 S 260 10, 320 34 S 420 54, 480 26 S 600 8, 660 32 S 720 40, 720 40" fill="none" stroke="#A8703E" stroke-width="1.4" opacity="0.55"/>
+    <path d="M0 54 C 70 34, 130 58, 190 40 S 290 22, 350 44 S 460 60, 520 36 S 620 18, 680 40 S 720 46, 720 46" fill="none" stroke="#3E5C76" stroke-width="1.2" opacity="0.45"/>
+  </svg>
+  <div class="bche-hero">
+    <p class="bche-eyebrow">Free Property Evaluation</p>
+    <h1>What's your home worth in today's BC market?</h1>
+    <p>Get a no-obligation market evaluation from a local agent — grounded in real comparable sales in your neighbourhood, not an automated guess.</p>
+  </div>
+  <form class="bche-body" id="bcheForm" action="https://formspree.io/f/moeakjlg" method="POST">
+    <div class="bche-field">
+      <label for="bche-address">Property address</label>
+      <input type="text" id="bche-address" name="address" placeholder="123 Maple Street, Kelowna, BC" required>
+    </div>
+    <div class="bche-row">
+      <div class="bche-field">
+        <label for="bche-name">Full name</label>
+        <input type="text" id="bche-name" name="name" placeholder="Jane Smith" required>
+      </div>
+      <div class="bche-field">
+        <label for="bche-phone">Phone</label>
+        <input type="tel" id="bche-phone" name="phone" placeholder="(250) 555-0123" required>
+      </div>
+    </div>
+    <div class="bche-row">
+      <div class="bche-field">
+        <label for="bche-email">Email</label>
+        <input type="email" id="bche-email" name="email" placeholder="you@email.com" required>
+      </div>
+      <div class="bche-field">
+        <label for="bche-timeline">Selling timeline</label>
+        <select id="bche-timeline" name="timeline">
+          <option value="Just curious">Just curious</option>
+          <option value="Within 3 months">Within 3 months</option>
+          <option value="3–6 months">3–6 months</option>
+          <option value="6–12 months">6–12 months</option>
+          <option value="Not sure yet">Not sure yet</option>
+        </select>
+      </div>
+    </div>
+    <button type="submit" class="bche-submit">Get my free home evaluation</button>
+    <p class="bche-fine">No commitment. Your information is only used to prepare your evaluation.</p>
+  </form>
+  <div class="bche-trust" id="bcheTrust">
+    <span>Local BC market data</span>
+    <span>Response within 24 hrs</span>
+    <span>No obligation</span>
+  </div>
+  <div class="bche-agent">
+    <p class="name">Happy Singh</p>
+    <p class="details">Woodhouse Realty — Team Bright Space Real Estate Group<br>778&nbsp;246&nbsp;1246</p>
+  </div>
+  <div class="bche-success" id="bcheSuccess">
+    <h2>Thanks — request received.</h2>
+    <p>A local agent will follow up with your evaluation shortly.</p>
+  </div>
+</div>
+<script>
+  (function () {
+    var form = document.getElementById('bcheForm');
+    var trust = document.getElementById('bcheTrust');
+    var success = document.getElementById('bcheSuccess');
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var submitBtn = form.querySelector('.bche-submit');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending…';
+      fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      })
+      .then(function (response) {
+        if (response.ok) {
+          form.classList.add('bche-hide');
+          trust.classList.add('bche-hide');
+          success.classList.add('bche-show');
+        } else {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Get my free home evaluation';
+          alert('Something went wrong sending your request. Please try again.');
+        }
+      })
+      .catch(function () {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Get my free home evaluation';
+        alert('Something went wrong sending your request. Please try again.');
+      });
+    });
+  })();
+</script>
+</body>
+</html>
